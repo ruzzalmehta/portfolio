@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruzzal Mehta — AVP Production Support & DevOps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F6F2;
+    --surface: #FFFFFF;
+    --ink: #1A1A1A;
+    --ink-soft: #5A5A5A;
+    --ink-muted: #9A9A9A;
+    --accent: #1D4ED8;
+    --accent-light: #EFF6FF;
+    --accent-soft: #BFDBFE;
+    --green: #059669;
+    --green-light: #ECFDF5;
+    --red: #DC2626;
+    --red-light: #FEF2F2;
+    --amber: #D97706;
+    --amber-light: #FFFBEB;
+    --border: #E5E3DC;
+    --border-strong: #C9C6BC;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 4px 16px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(247,246,242,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    padding: 120px 40px 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 80px;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(44px, 6vw, 72px);
+    line-height: 1.08;
+    color: var(--ink);
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-bio {
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 36px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-primary:hover { background: #1e40af; transform: translateY(-1px); box-shadow: var(--shadow); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--border-strong);
+  }
+
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  /* HERO CARD */
+  .hero-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: var(--shadow);
+  }
+
+  .hero-card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, #7C3AED 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .hero-card-name {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .hero-card-title {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    color: var(--green);
+    background: var(--green-light);
+    border-radius: 100px;
+    padding: 4px 10px;
+    margin-left: auto;
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .stat-item {
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+  }
+
+  .stat-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+
+  /* SECTION LAYOUT */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 80px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  /* SKILLS */
+  .skills-bg {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .skill-group {
+    background: var(--bg);
+    border-radius: var(--radius);
+    padding: 24px;
+    border: 1px solid var(--border);
+  }
+
+  .skill-group-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 16px;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skill-tag {
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--ink-soft);
+    transition: all 0.18s;
+  }
+
+  .skill-tag:hover {
+    border-color: var(--accent-soft);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .skill-tag.learning {
+    border-style: dashed;
+    color: var(--amber);
+    border-color: #FCD34D;
+    background: var(--amber-light);
+  }
+
+  /* EXPERIENCE TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 48px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -32px;
+    top: 6px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2.5px solid var(--accent);
+    background: var(--bg);
+    z-index: 1;
+  }
+
+  .timeline-item:first-child .timeline-dot {
+    background: var(--accent);
+  }
+
+  .timeline-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+  }
+
+  .timeline-card:hover {
+    box-shadow: var(--shadow);
+  }
+
+  .timeline-meta {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .timeline-role {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .timeline-company {
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-muted);
+    background: var(--bg);
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .timeline-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .timeline-bullets li {
+    font-size: 14px;
+    color: var(--ink-soft);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.55;
+  }
+
+  .timeline-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-soft);
+    font-size: 12px;
+    top: 2px;
+  }
+
+  /* PROJECTS */
+  .projects-bg {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+
+  .project-tab {
+    padding: 20px;
+    border-radius: var(--radius);
+    border: 2px solid var(--border);
+    cursor: pointer;
+    background: var(--bg);
+    transition: all 0.2s;
+    text-align: left;
+  }
+
+  .project-tab.active {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .project-tab-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .project-tab-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .project-tab-desc {
+    font-size: 12px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  .project-panel {
+    display: none;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    min-height: 420px;
+  }
+
+  .project-panel.active { display: block; }
+
+  /* INCIDENT SIMULATOR */
+  .incident-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .incident-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+  }
+
+  .sev-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  .sev-1 { background: #FEE2E2; color: #991B1B; }
+  .sev-2 { background: #FEF3C7; color: #92400E; }
+  .sev-3 { background: #DBEAFE; color: #1E40AF; }
+
+  .incident-scenarios {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .scenario-btn {
+    font-size: 12px;
+    padding: 7px 14px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border-strong);
+    background: var(--surface);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+    color: var(--ink-soft);
+  }
+
+  .scenario-btn:hover, .scenario-btn.selected {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .incident-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .inc-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+  }
+
+  .inc-box-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+  }
+
+  .runbook-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .runbook-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    opacity: 0.4;
+    transition: all 0.4s;
+  }
+
+  .runbook-step.done {
+    color: var(--green);
+    opacity: 1;
+  }
+
+  .runbook-step.active {
+    color: var(--ink);
+    opacity: 1;
+    font-weight: 500;
+  }
+
+  .step-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  .runbook-step.done .step-icon {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .log-stream {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: #0F172A;
+    color: #94A3B8;
+    border-radius: 6px;
+    padding: 12px;
+    height: 180px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .log-line { display: flex; gap: 8px; }
+  .log-time { color: #475569; flex-shrink: 0; }
+  .log-info { color: #38BDF8; }
+  .log-warn { color: #FBBF24; }
+  .log-error { color: #F87171; }
+  .log-success { color: #34D399; }
+
+  .mttr-display {
+    text-align: center;
+    padding: 12px;
+    background: var(--accent-light);
+    border-radius: 8px;
+    margin-top: 12px;
+  }
+
+  .mttr-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    color: var(--accent);
+  }
+
+  .mttr-label {
+    font-size: 11px;
+    color: var(--ink-muted);
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .inc-controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  /* LOG ANALYZER */
+  .log-analyzer-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .log-input-area {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    width: 100%;
+    height: 220px;
+    padding: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    resize: vertical;
+    line-height: 1.6;
+  }
+
+  .log-input-area:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .log-results {
+    background: #0F172A;
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    height: 220px;
+    overflow-y: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    line-height: 1.7;
+    color: #94A3B8;
+  }
+
+  .log-highlight-error { color: #F87171; background: rgba(248,113,113,0.1); padding: 1px 4px; border-radius: 3px; }
+  .log-highlight-warn { color: #FBBF24; background: rgba(251,191,36,0.1); padding: 1px 4px; border-radius: 3px; }
+  .log-highlight-info { color: #38BDF8; }
+  .log-highlight-success { color: #34D399; }
+
+  .log-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .log-count {
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .log-count-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+  }
+
+  .log-count-label {
+    font-size: 11px;
+    color: var(--ink-muted);
+  }
+
+  /* CICD PIPELINE */
+  .pipeline-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .pipeline-stages {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    padding: 4px;
+  }
+
+  .pipeline-stage {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .stage-node {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    min-width: 100px;
+  }
+
+  .stage-node:hover {
+    border-color: var(--accent-soft);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  .stage-node.running {
+    border-color: var(--accent);
+    background: var(--accent-light);
+    animation: stageGlow 1.5s infinite alternate;
+  }
+
+  .stage-node.passed {
+    border-color: var(--green);
+    background: var(--green-light);
+  }
+
+  .stage-node.failed {
+    border-color: var(--red);
+    background: var(--red-light);
+  }
+
+  @keyframes stageGlow {
+    from { box-shadow: 0 0 0 0 rgba(29,78,216,0.1); }
+    to { box-shadow: 0 0 0 6px rgba(29,78,216,0.2); }
+  }
+
+  .stage-icon { font-size: 20px; margin-bottom: 4px; }
+
+  .stage-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .stage-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+
+  .stage-node.running .stage-status { color: var(--accent); }
+  .stage-node.passed .stage-status { color: var(--green); }
+  .stage-node.failed .stage-status { color: var(--red); }
+
+  .stage-arrow {
+    color: var(--border-strong);
+    font-size: 18px;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+
+  .pipeline-detail {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    min-height: 140px;
+  }
+
+  .pipeline-detail-title {
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  .pipeline-log {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .plog-ok { color: var(--green); }
+  .plog-run { color: var(--accent); }
+  .plog-err { color: var(--red); }
+  .plog-skip { color: var(--ink-muted); }
+
+  .pipeline-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .branch-select {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  /* EDUCATION & CERTS */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .edu-degree {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .edu-school {
+    font-size: 14px;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+
+  .edu-year {
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .cert-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .cert-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .cert-name {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .cert-issuer {
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+
+  /* CONTACT */
+  .contact-bg {
+    background: var(--ink);
+    color: white;
+  }
+
+  .contact-bg .section-label { color: #60A5FA; }
+  .contact-bg .section-label::after { background: #334155; }
+  .contact-bg .section-title { color: white; }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: #CBD5E1;
+    padding: 20px;
+    background: #1E293B;
+    border-radius: var(--radius-sm);
+    border: 1px solid #334155;
+    transition: all 0.2s;
+  }
+
+  .contact-item:hover {
+    background: #1D4ED8;
+    border-color: #1D4ED8;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .contact-icon { font-size: 22px; flex-shrink: 0; }
+
+  .contact-label { font-size: 11px; color: #64748B; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .contact-item:hover .contact-label { color: #93C5FD; }
+  .contact-value { font-size: 14px; font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid #1E293B;
+    padding: 24px 40px;
+    text-align: center;
+    color: #475569;
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .fade-up-d1 { animation-delay: 0.1s; }
+  .fade-up-d2 { animation-delay: 0.2s; }
+  .fade-up-d3 { animation-delay: 0.3s; }
+  .fade-up-d4 { animation-delay: 0.4s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; min-height: auto; padding-top: 100px; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .incident-body { grid-template-columns: 1fr; }
+    .log-analyzer-wrap { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .certs-grid { grid-template-columns: 1fr 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .hero-card { display: none; }
+    nav { padding: 0 20px; }
+    .nav-links { gap: 16px; }
+    .section { padding: 60px 20px; }
+  }
+
+  @media (max-width: 600px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .certs-grid { grid-template-columns: 1fr; }
+    .log-summary { grid-template-columns: 1fr 1fr; }
+    .pipeline-stages { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .stage-arrow { transform: rotate(90deg); }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">Ruzzal Mehta</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="about">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow fade-up">Production Support · DevOps · ITIL</div>
+      <h1 class="fade-up fade-up-d1">Ruzzal<br><em>Mehta</em></h1>
+      <p class="hero-bio fade-up fade-up-d2">
+        Assistant Vice President at Citi with 10+ years driving production stability, incident management, and operational excellence across financial services, adtech, and enterprise software. Now expanding into cloud and DevOps engineering.
+      </p>
+      <div class="hero-actions fade-up fade-up-d3">
+        <a href="#projects" class="btn btn-primary">↓ View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+        <a href="mailto:ruzzalmehta@gmail.com" class="btn btn-outline">✉ Email</a>
+      </div>
+    </div>
+    <div class="hero-card fade-up fade-up-d2">
+      <div class="hero-card-header">
+        <div class="avatar">R</div>
+        <div>
+          <div class="hero-card-name">Ruzzal Mehta</div>
+          <div class="hero-card-title">AVP · Citi, Pune</div>
+        </div>
+        <div class="status-pill"><span class="status-dot"></span>Open to roles</div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Years in Production Support</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">5</div>
+          <div class="stat-label">Companies Supported</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">L1–L3</div>
+          <div class="stat-label">Full Escalation Stack</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">ITIL</div>
+          <div class="stat-label">V4 Certified</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-bg" id="skills">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-label">What I Work With</div>
+      <h2 class="section-title">Skills & Tooling</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Core Ops</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">Shell Scripting</span>
+          <span class="skill-tag">Autosys</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">Incident Management</span>
+          <span class="skill-tag">Change Management</span>
+          <span class="skill-tag">ITIL V4</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Tools & Platforms</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Git / GitHub</span>
+          <span class="skill-tag">JIRA</span>
+          <span class="skill-tag">ServiceNow</span>
+          <span class="skill-tag">Zendesk</span>
+          <span class="skill-tag">Kibana</span>
+          <span class="skill-tag">Looker</span>
+          <span class="skill-tag">ITRS Geneos</span>
+          <span class="skill-tag">Confluence</span>
+          <span class="skill-tag">Salesforce</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud & DevOps <span style="font-size:10px;color:var(--amber)">· Learning</span></div>
+        <div class="skill-tags">
+          <span class="skill-tag learning">AWS (in progress)</span>
+          <span class="skill-tag learning">Docker</span>
+          <span class="skill-tag learning">Kubernetes</span>
+          <span class="skill-tag learning">Terraform</span>
+          <span class="skill-tag learning">CI/CD Pipelines</span>
+          <span class="skill-tag learning">Ansible</span>
+          <span class="skill-tag learning">Prometheus</span>
+          <span class="skill-tag learning">Grafana</span>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--ink-muted);margin-top:16px;font-family:'DM Mono',monospace;">⚡ Dashed tags = actively learning</p>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-label">Career History</div>
+      <h2 class="section-title">Work Experience</h2>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <div>
+              <div class="timeline-role">Assistant Vice President</div>
+              <div class="timeline-company">Citi · Pune, India</div>
+            </div>
+            <div class="timeline-date">Aug 2023 – Present</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Lead a team of production support specialists across critical banking operations</li>
+            <li>Monitor and execute production batches and Autosys jobs at scale</li>
+            <li>Oversee end-to-end Incident and Change management processes per ITIL standards</li>
+            <li>Troubleshoot production issues, resolve user queries, and reduce MTTR</li>
+            <li>Author and maintain shell scripts for task automation and operational efficiency</li>
+            <li>Manage script versioning and code changes through Git-based VCS</li>
+            <li>Spearhead production package deployments with minimal downtime</li>
+            <li>Develop and maintain documentation for production support procedures</li>
+            <li>Drive problem management by identifying recurring issues and root causes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <div>
+              <div class="timeline-role">Senior Product Support Engineer</div>
+              <div class="timeline-company">Singular · Pune, India</div>
+            </div>
+            <div class="timeline-date">Jan 2023 – Aug 2023</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Performed Linux log analysis to identify and resolve production issues in mobile attribution</li>
+            <li>Developed and executed complex SQL queries for data extraction and analysis</li>
+            <li>Triaged application bugs related to mobile attribution and analytics platforms</li>
+            <li>Engaged directly with clients on technical calls, resolving product issues and queries</li>
+            <li>Managed incident queues and escalated incidents via Zendesk</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <div>
+              <div class="timeline-role">Senior Customer Excellence Engineer</div>
+              <div class="timeline-company">Integral Ad Science · Pune, India</div>
+            </div>
+            <div class="timeline-date">Sep 2020 – Jan 2023</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Deep technical troubleshooting and optimization in HTML, JavaScript, and SQL for ad measurement tech</li>
+            <li>Triaged and resolved application and production issues for digital advertising clients</li>
+            <li>Extracted and built custom reports as per business demand using Looker</li>
+            <li>Collaborated with CSMs and Account Management for client escalations</li>
+            <li>Managed incident queues and led efficient escalation process via JIRA and Salesforce</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <div>
+              <div class="timeline-role">Software Support Engineer</div>
+              <div class="timeline-company">Amdocs · Pune, India</div>
+            </div>
+            <div class="timeline-date">Sep 2018 – Aug 2020</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Provided L1/L2 technical support for production systems and resolved day-to-day issues</li>
+            <li>Executed RPM installations and implemented production deployments</li>
+            <li>Wrote shell scripts for monitoring automation and system enhancement</li>
+            <li>Linux server management: user admin, log rotation, disk usage control</li>
+            <li>Participated in incident bridge calls, coordinating resources for rapid resolution</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <div>
+              <div class="timeline-role">Senior Systems Engineer</div>
+              <div class="timeline-company">Infosys · Pune, India</div>
+            </div>
+            <div class="timeline-date">Sep 2015 – Sep 2018</div>
+          </div>
+          <ul class="timeline-bullets">
+            <li>L2 Business Application Support Analyst for UBS investment banking applications</li>
+            <li>Identified and resolved application performance issues through code debugging</li>
+            <li>Investigated and resolved complex technical issues within SLA commitments</li>
+            <li>Automated daily tasks via shell scripts and followed ITIL-aligned ITSM procedures</li>
+            <li>Provided after-hours on-call support for critical applications and projects</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-bg" id="projects">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-label">Live Demos</div>
+      <h2 class="section-title">Interactive Projects</h2>
+      <p style="color:var(--ink-soft);margin-top:10px;font-size:15px;">Click each project below to try an interactive simulation of real production support and DevOps scenarios.</p>
+    </div>
+
+    <div class="projects-grid">
+      <div class="project-tab active" onclick="switchProject('incident')">
+        <div class="project-tab-icon">🚨</div>
+        <div class="project-tab-name">Incident Simulator</div>
+        <div class="project-tab-desc">Trigger a live incident and walk through triage, runbook execution, and resolution.</div>
+      </div>
+      <div class="project-tab" onclick="switchProject('log')">
+        <div class="project-tab-icon">🔍</div>
+        <div class="project-tab-name">Log Analyzer</div>
+        <div class="project-tab-desc">Paste raw logs and instantly analyze errors, warnings, and patterns.</div>
+      </div>
+      <div class="project-tab" onclick="switchProject('cicd')">
+        <div class="project-tab-icon">🚀</div>
+        <div class="project-tab-name">CI/CD Visualizer</div>
+        <div class="project-tab-desc">Watch a deployment pipeline run stage by stage with live log output.</div>
+      </div>
+    </div>
+
+    <!-- INCIDENT SIMULATOR -->
+    <div class="project-panel active" id="panel-incident">
+      <div class="incident-header">
+        <div>
+          <div class="incident-title">🚨 Incident Command Center</div>
+          <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Select a scenario, fire the incident, and resolve it step by step</div>
+        </div>
+      </div>
+
+      <div class="incident-scenarios">
+        <button class="scenario-btn selected" onclick="selectScenario(this,'db')">🗄️ DB Connection Pool Exhausted</button>
+        <button class="scenario-btn" onclick="selectScenario(this,'batch')">⏱ Batch Job Stuck</button>
+        <button class="scenario-btn" onclick="selectScenario(this,'cpu')">🔥 CPU Spike on App Server</button>
+        <button class="scenario-btn" onclick="selectScenario(this,'api')">🔌 API Gateway Timeout</button>
+      </div>
+
+      <div class="incident-body">
+        <div>
+          <div class="inc-box" style="margin-bottom:12px;">
+            <div class="inc-box-title">Incident Details</div>
+            <div id="inc-summary" style="font-size:13px;color:var(--ink-soft);line-height:1.6;">
+              <strong style="color:var(--red);">SEV-1</strong> · DB Connection Pool Exhausted<br>
+              <span style="color:var(--ink-muted);font-family:'DM Mono',monospace;font-size:11px;">Opened: Just now · Owner: On-Call</span>
+            </div>
+          </div>
+          <div class="inc-box">
+            <div class="inc-box-title">Runbook Steps</div>
+            <ul class="runbook-steps" id="runbook-list">
+              <li class="runbook-step" data-step="0"><span class="step-icon">1</span> Acknowledge alert in ServiceNow</li>
+              <li class="runbook-step" data-step="1"><span class="step-icon">2</span> Check DB connection pool metrics</li>
+              <li class="runbook-step" data-step="2"><span class="step-icon">3</span> Identify blocking queries via SQL</li>
+              <li class="runbook-step" data-step="3"><span class="step-icon">4</span> Kill long-running sessions</li>
+              <li class="runbook-step" data-step="4"><span class="step-icon">5</span> Increase pool size temporarily</li>
+              <li class="runbook-step" data-step="5"><span class="step-icon">✓</span> Confirm service restored</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="inc-box" style="margin-bottom:12px;">
+            <div class="inc-box-title">Live Log Stream</div>
+            <div class="log-stream" id="log-stream">
+              <div style="color:#475569;">// Waiting for incident trigger...</div>
+            </div>
+          </div>
+          <div class="mttr-display">
+            <div class="mttr-number" id="mttr-display">--:--</div>
+            <div class="mttr-label">MTTR (hh:mm:ss)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inc-controls">
+        <button class="btn btn-primary" onclick="fireIncident()" id="fire-btn">🚨 Fire Incident</button>
+        <button class="btn btn-outline" onclick="nextStep()" id="next-btn" style="display:none">→ Next Step</button>
+        <button class="btn btn-outline" onclick="resetIncident()" id="reset-btn" style="display:none">↺ Reset</button>
+        <span id="inc-status" style="font-size:13px;color:var(--ink-muted);font-family:'DM Mono',monospace;margin-left:8px;"></span>
+      </div>
+    </div>
+
+    <!-- LOG ANALYZER -->
+    <div class="project-panel" id="panel-log">
+      <div style="margin-bottom:16px;">
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:4px;">🔍 Log Analyzer</div>
+        <div style="font-size:13px;color:var(--ink-muted);">Paste any log output below — the analyzer will highlight errors, warnings, and key events</div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+        <button class="btn btn-outline" style="font-size:12px;padding:7px 14px;" onclick="loadSampleLog('app')">Load App Log</button>
+        <button class="btn btn-outline" style="font-size:12px;padding:7px 14px;" onclick="loadSampleLog('autosys')">Load Autosys Log</button>
+        <button class="btn btn-outline" style="font-size:12px;padding:7px 14px;" onclick="loadSampleLog('nginx')">Load Nginx Log</button>
+        <button class="btn btn-primary" style="font-size:12px;padding:7px 14px;" onclick="analyzeLogs()">Analyze →</button>
+        <button class="btn btn-outline" style="font-size:12px;padding:7px 14px;" onclick="clearLogs()">Clear</button>
+      </div>
+
+      <div class="log-analyzer-wrap">
+        <div>
+          <div style="font-size:11px;color:var(--ink-muted);margin-bottom:6px;font-family:'DM Mono',monospace;">INPUT</div>
+          <textarea class="log-input-area" id="log-input" placeholder="Paste your log file here..."></textarea>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--ink-muted);margin-bottom:6px;font-family:'DM Mono',monospace;">ANALYSIS OUTPUT</div>
+          <div class="log-results" id="log-output">
+            <span style="color:#475569;">// Analysis will appear here</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="log-summary">
+        <div class="log-count">
+          <div class="log-count-num" id="cnt-error" style="color:var(--red);">0</div>
+          <div class="log-count-label">Errors</div>
+        </div>
+        <div class="log-count">
+          <div class="log-count-num" id="cnt-warn" style="color:var(--amber);">0</div>
+          <div class="log-count-label">Warnings</div>
+        </div>
+        <div class="log-count">
+          <div class="log-count-num" id="cnt-info" style="color:var(--accent);">0</div>
+          <div class="log-count-label">Info</div>
+        </div>
+        <div class="log-count">
+          <div class="log-count-num" id="cnt-lines" style="color:var(--ink);">0</div>
+          <div class="log-count-label">Total Lines</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CICD VISUALIZER -->
+    <div class="project-panel" id="panel-cicd">
+      <div style="margin-bottom:20px;">
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:4px;">🚀 CI/CD Pipeline Visualizer</div>
+        <div style="font-size:13px;color:var(--ink-muted);">Simulate a full deployment pipeline from code push to production</div>
+      </div>
+
+      <div class="pipeline-controls" style="margin-bottom:20px;">
+        <select class="branch-select" id="branch-select">
+          <option value="main">🌿 main</option>
+          <option value="release">📦 release/v2.4.1</option>
+          <option value="hotfix">🔥 hotfix/db-pool-fix</option>
+        </select>
+        <button class="btn btn-primary" onclick="runPipeline()" id="pipeline-run-btn">▶ Run Pipeline</button>
+        <button class="btn btn-outline" onclick="resetPipeline()" id="pipeline-reset-btn" style="display:none">↺ Reset</button>
+        <span id="pipeline-status" style="font-size:12px;color:var(--ink-muted);font-family:'DM Mono',monospace;"></span>
+      </div>
+
+      <div class="pipeline-stages" id="pipeline-stages">
+        <div class="pipeline-stage">
+          <div class="stage-node" id="stage-0">
+            <div class="stage-icon">📥</div>
+            <div class="stage-name">Checkout</div>
+            <div class="stage-status" id="status-0">idle</div>
+          </div>
+        </div>
+        <div class="pipeline-stage"><span class="stage-arrow">→</span></div>
+        <div class="pipeline-stage">
+          <div class="stage-node" id="stage-1">
+            <div class="stage-icon">🔨</div>
+            <div class="stage-name">Build</div>
+            <div class="stage-status" id="status-1">idle</div>
+          </div>
+        </div>
+        <div class="pipeline-stage"><span class="stage-arrow">→</span></div>
+        <div class="pipeline-stage">
+          <div class="stage-node" id="stage-2">
+            <div class="stage-icon">🧪</div>
+            <div class="stage-name">Unit Tests</div>
+            <div class="stage-status" id="status-2">idle</div>
+          </div>
+        </div>
+        <div class="pipeline-stage"><span class="stage-arrow">→</span></div>
+        <div class="pipeline-stage">
+          <div class="stage-node" id="stage-3">
+            <div class="stage-icon">🔐</div>
+            <div class="stage-name">Security Scan</div>
+            <div class="stage-status" id="status-3">idle</div>
+          </div>
+        </div>
+        <div class="pipeline-stage"><span class="stage-arrow">→</span></div>
+        <div class="pipeline-stage">
+          <div class="stage-node" id="stage-4">
+            <div class="stage-icon">🐳</div>
+            <div class="stage-name">Docker Build</div>
+            <div class="stage-status" id="status-4">idle</div>
+          </div>
+        </div>
+        <div class="pipeline-stage"><span class="stage-arrow">→</span></div>
+        <div class="pipeline-stage">
+          <div class="stage-node" id="stage-5">
+            <div class="stage-icon">🧩</div>
+            <div class="stage-name">Staging Deploy</div>
+            <div class="stage-status" id="status-5">idle</div>
+          </div>
+        </div>
+        <div class="pipeline-stage"><span class="stage-arrow">→</span></div>
+        <div class="pipeline-stage">
+          <div class="stage-node" id="stage-6">
+            <div class="stage-icon">✅</div>
+            <div class="stage-name">Smoke Tests</div>
+            <div class="stage-status" id="status-6">idle</div>
+          </div>
+        </div>
+        <div class="pipeline-stage"><span class="stage-arrow">→</span></div>
+        <div class="pipeline-stage">
+          <div class="stage-node" id="stage-7">
+            <div class="stage-icon">🚀</div>
+            <div class="stage-name">Prod Deploy</div>
+            <div class="stage-status" id="status-7">idle</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-detail" id="pipeline-detail">
+        <div class="pipeline-detail-title" id="pipeline-detail-title">Pipeline ready — select a branch and click Run</div>
+        <div class="pipeline-log" id="pipeline-log">
+          <span class="plog-skip">Awaiting trigger...</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION & CERTS -->
+<section id="education">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-label">Academic Background</div>
+      <h2 class="section-title">Education & Certifications</h2>
+    </div>
+
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div style="font-size:28px;margin-bottom:12px;">🎓</div>
+        <div class="edu-degree">B.E. — Electronics & Telecommunication</div>
+        <div class="edu-school">MIT College of Engineering · Pune, India</div>
+        <div class="edu-year">Graduated May 2015 · GPA: 60.93%</div>
+      </div>
+      <div class="edu-card">
+        <div style="font-size:28px;margin-bottom:12px;">📜</div>
+        <div class="edu-degree">Diploma — Electronics & Telecommunication</div>
+        <div class="edu-school">SVPM's ITE · Malegaon, India</div>
+        <div class="edu-year">Completed May 2012 · GPA: 86.86%</div>
+      </div>
+    </div>
+
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon">🏅</div>
+        <div>
+          <div class="cert-name">ITIL V4 Foundation</div>
+          <div class="cert-issuer">AXELOS</div>
+        </div>
+      </div>
+      <div class="cert-card" style="border-style:dashed;border-color:#FCD34D;background:var(--amber-light);">
+        <div class="cert-icon">☁️</div>
+        <div>
+          <div class="cert-name">AWS Solutions Architect</div>
+          <div class="cert-issuer" style="color:var(--amber);">In Progress</div>
+        </div>
+      </div>
+      <div class="cert-card" style="border-style:dashed;border-color:#FCD34D;background:var(--amber-light);">
+        <div class="cert-icon">🐳</div>
+        <div>
+          <div class="cert-name">Docker / Kubernetes</div>
+          <div class="cert-issuer" style="color:var(--amber);">In Progress</div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--ink-muted);margin-top:12px;font-family:'DM Mono',monospace;">⚡ Dashed = certification in progress</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-bg" id="contact">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-label">Let's Connect</div>
+      <h2 class="section-title">Get in Touch</h2>
+    </div>
+    <div class="contact-grid">
+      <a class="contact-item" href="mailto:ruzzalmehta@gmail.com">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">ruzzalmehta@gmail.com</div>
+        </div>
+      </a>
+      <a class="contact-item" href="tel:+919665379962">
+        <div class="contact-icon">📱</div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">+91 96653 79962</div>
+        </div>
+      </a>
+      <a class="contact-item" href="https://www.linkedin.com/in/ruzzal-mehta" target="_blank">
+        <div class="contact-icon">💼</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">linkedin.com/in/ruzzal-mehta</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built with care · Ruzzal Mehta · Pune, India · <span id="footer-year"></span>
+</footer>
+
+<script>
+  // Footer year
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  // PROJECT TABS
+  function switchProject(name) {
+    document.querySelectorAll('.project-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.project-panel').forEach(p => p.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    document.getElementById('panel-' + name).classList.add('active');
+  }
+
+  // =====================
+  // INCIDENT SIMULATOR
+  // =====================
+  const scenarios = {
+    db: {
+      sev: 'SEV-1',
+      title: 'DB Connection Pool Exhausted',
+      steps: [
+        'Acknowledge alert in ServiceNow',
+        'Check DB connection pool metrics',
+        'Identify blocking queries via SQL',
+        'Kill long-running sessions',
+        'Increase pool size temporarily',
+        'Confirm service restored'
+      ],
+      logs: [
+        ['error', 'ALERT: DB pool at 100% capacity (500/500 connections)'],
+        ['error', 'ORA-12516: TNS listener could not find available handler'],
+        ['warn',  'App server reporting HTTP 503 on /api/transactions'],
+        ['info',  'ACK received from on-call engineer ruzzal@citi'],
+        ['info',  'Pulling active connections: SELECT COUNT(*) FROM V$SESSION'],
+        ['info',  'Found 47 sessions blocked on lock wait > 120s'],
+        ['warn',  'Long-running query found: PID 38821 — running 18m'],
+        ['info',  'Executing: ALTER SYSTEM KILL SESSION \'38821,1234\''],
+        ['info',  'Pool utilization dropping: 500 → 312 → 198 → 95'],
+        ['success','Pool normalized at 82/500 — service restored'],
+        ['success','MTTR: 00:08:24 · Incident closed · PIR scheduled'],
+      ]
+    },
+    batch: {
+      sev: 'SEV-2',
+      title: 'Batch Job Stuck / Not Completed',
+      steps: [
+        'Check Autosys job status dashboard',
+        'Identify stuck job and dependencies',
+        'Review job log for error output',
+        'Kill and restart stuck job',
+        'Monitor downstream job chain',
+        'Confirm batch completion'
+      ],
+      logs: [
+        ['error', 'ALERT: BATCH_DAILY_RECONCILE running for 4h 12m (SLA: 2h)'],
+        ['warn',  'Downstream jobs BATCH_REPORT, BATCH_NOTIFY are in WAIT status'],
+        ['info',  'Checking: autorep -J BATCH_DAILY_RECONCILE -t'],
+        ['warn',  'Job status: RU (Running) · Last checkpoint 47 min ago'],
+        ['info',  'Tail job log: /logs/batch/reconcile_20241112.log'],
+        ['error', 'Error found: java.sql.SQLException: Timeout waiting for connection'],
+        ['info',  'Issuing: sendevent -J BATCH_DAILY_RECONCILE -E KILLJOB'],
+        ['info',  'Job killed. Clearing lock table: DELETE FROM JOB_LOCK WHERE JOB=\'RECONCILE\''],
+        ['info',  'Restarting: sendevent -J BATCH_DAILY_RECONCILE -E STARTJOB'],
+        ['success','Job running cleanly · Checkpoint updating every 3 min'],
+        ['success','Batch completed · Downstream jobs released · SLA recovered'],
+      ]
+    },
+    cpu: {
+      sev: 'SEV-2',
+      title: 'CPU Spike on App Server',
+      steps: [
+        'Acknowledge CPU alert from Geneos',
+        'SSH into affected server',
+        'Identify top CPU consumers (top/ps)',
+        'Analyse process and thread dumps',
+        'Kill or restart offending process',
+        'Confirm CPU normalisation'
+      ],
+      logs: [
+        ['error', 'ALERT: APP-SERVER-04 CPU at 98% for >5 min (threshold: 80%)'],
+        ['info',  'SSH: ruzzal@app-server-04 connected'],
+        ['info',  'Running: top -bn1 | head -20'],
+        ['warn',  'PID 19834 (java) consuming 87% CPU · User: appuser'],
+        ['info',  'Taking thread dump: kill -3 19834 > /tmp/threaddump.txt'],
+        ['warn',  'Found 340 threads in BLOCKED state — lock contention detected'],
+        ['info',  'Checking GC logs: high full GC frequency — heap pressure'],
+        ['info',  'Restarting app service: systemctl restart appservice'],
+        ['info',  'App back up: health check returning HTTP 200'],
+        ['success','CPU normalized to 24% · All threads in RUNNABLE state'],
+        ['success','Incident resolved · Heap config tuning raised to dev team'],
+      ]
+    },
+    api: {
+      sev: 'SEV-1',
+      title: 'API Gateway Timeout',
+      steps: [
+        'Acknowledge API alert via PagerDuty',
+        'Check API Gateway error rates',
+        'Test endpoint response times',
+        'Identify backend bottleneck',
+        'Apply rate limit / failover',
+        'Validate API recovery'
+      ],
+      logs: [
+        ['error', 'ALERT: /api/payments 504 Gateway Timeout rate: 62%'],
+        ['error', 'PagerDuty P1 opened: payments-api-prod · Escalated to L2'],
+        ['info',  'Checking Kibana dashboard: payments-api-prod-*'],
+        ['warn',  'Avg response time: 28,432ms (SLA: <2000ms)'],
+        ['info',  'Upstream test: curl -w "%{time_total}" https://api.citi/payments/ping'],
+        ['error', 'Upstream service payment-processor-svc returning 503'],
+        ['info',  'Checking pod health: kubectl get pods -n payments'],
+        ['warn',  'payment-processor-svc-7f9d: CrashLoopBackOff detected'],
+        ['info',  'Rolling restart: kubectl rollout restart deploy/payment-processor-svc'],
+        ['info',  'Pods stabilising: 0/3 → 1/3 → 2/3 → 3/3 Running'],
+        ['success','API error rate dropping: 62% → 18% → 2% → 0.1%'],
+        ['success','Service restored · RCA to be filed · PIR in 24h'],
+      ]
+    }
+  };
+
+  let currentScenario = 'db';
+  let currentStep = -1;
+  let logIndex = 0;
+  let mttrInterval = null;
+  let mttrSeconds = 0;
+  let incidentActive = false;
+
+  function selectScenario(btn, key) {
+    if (incidentActive) return;
+    document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    currentScenario = key;
+    const s = scenarios[key];
+    document.getElementById('inc-summary').innerHTML =
+      `<strong style="color:var(--red);">${s.sev}</strong> · ${s.title}<br>
+       <span style="color:var(--ink-muted);font-family:'DM Mono',monospace;font-size:11px;">Opened: Just now · Owner: On-Call</span>`;
+    const steps = document.getElementById('runbook-list');
+    steps.innerHTML = s.steps.map((st, i) =>
+      `<li class="runbook-step" data-step="${i}"><span class="step-icon">${i === s.steps.length - 1 ? '✓' : i+1}</span> ${st}</li>`
+    ).join('');
+    document.getElementById('log-stream').innerHTML = '<div style="color:#475569;">// Waiting for incident trigger...</div>';
+    document.getElementById('mttr-display').textContent = '--:--';
+    document.getElementById('inc-status').textContent = '';
+  }
+
+  function fireIncident() {
+    incidentActive = true;
+    currentStep = 0;
+    logIndex = 0;
+    document.getElementById('fire-btn').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'inline-flex';
+    document.getElementById('reset-btn').style.display = 'inline-flex';
+    document.getElementById('log-stream').innerHTML = '';
+    document.getElementById('inc-status').textContent = 'INCIDENT OPEN';
+
+    mttrSeconds = 0;
+    mttrInterval = setInterval(() => {
+      mttrSeconds++;
+      const h = String(Math.floor(mttrSeconds/3600)).padStart(2,'0');
+      const m = String(Math.floor((mttrSeconds%3600)/60)).padStart(2,'0');
+      const s2 = String(mttrSeconds%60).padStart(2,'0');
+      document.getElementById('mttr-display').textContent = `${h}:${m}:${s2}`;
+    }, 1000);
+
+    addLogLine(scenarios[currentScenario].logs[0]);
+    addLogLine(scenarios[currentScenario].logs[1]);
+    logIndex = 2;
+    highlightStep(0);
+  }
+
+  function nextStep() {
+    const s = scenarios[currentScenario];
+    if (currentStep >= s.steps.length) return;
+
+    markStepDone(currentStep);
+    currentStep++;
+
+    if (logIndex < s.logs.length) {
+      addLogLine(s.logs[logIndex]);
+      if (logIndex + 1 < s.logs.length) addLogLine(s.logs[logIndex + 1]);
+      logIndex = Math.min(logIndex + 2, s.logs.length);
+    }
+
+    if (currentStep < s.steps.length) {
+      highlightStep(currentStep);
+    } else {
+      clearInterval(mttrInterval);
+      document.getElementById('next-btn').style.display = 'none';
+      document.getElementById('inc-status').textContent = '✅ RESOLVED';
+      document.getElementById('inc-status').style.color = 'var(--green)';
+    }
+  }
+
+  function highlightStep(idx) {
+    document.querySelectorAll('.runbook-step').forEach(s => s.classList.remove('active'));
+    const el = document.querySelector(`.runbook-step[data-step="${idx}"]`);
+    if (el) el.classList.add('active');
+  }
+
+  function markStepDone(idx) {
+    const el = document.querySelector(`.runbook-step[data-step="${idx}"]`);
+    if (el) { el.classList.remove('active'); el.classList.add('done'); el.querySelector('.step-icon').textContent = '✓'; }
+  }
+
+  function addLogLine([type, msg]) {
+    const stream = document.getElementById('log-stream');
+    const d = new Date();
+    const ts = `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
+    const cls = { error:'log-error', warn:'log-warn', info:'log-info', success:'log-success' }[type] || 'log-info';
+    const line = document.createElement('div');
+    line.className = 'log-line';
+    line.innerHTML = `<span class="log-time">${ts}</span><span class="${cls}">[${type.toUpperCase()}]</span><span> ${msg}</span>`;
+    stream.appendChild(line);
+    stream.scrollTop = stream.scrollHeight;
+  }
+
+  function resetIncident() {
+    clearInterval(mttrInterval);
+    incidentActive = false;
+    currentStep = -1;
+    logIndex = 0;
+    mttrSeconds = 0;
+    document.getElementById('fire-btn').style.display = 'inline-flex';
+    document.getElementById('next-btn').style.display = 'none';
+    document.getElementById('reset-btn').style.display = 'none';
+    document.getElementById('log-stream').innerHTML = '<div style="color:#475569;">// Waiting for incident trigger...</div>';
+    document.getElementById('mttr-display').textContent = '--:--';
+    document.getElementById('inc-status').textContent = '';
+    document.getElementById('inc-status').style.color = 'var(--ink-muted)';
+    document.querySelectorAll('.runbook-step').forEach((el, i) => {
+      el.classList.remove('active', 'done');
+      el.querySelector('.step-icon').textContent = i === el.closest('ul').querySelectorAll('li').length - 1 ? '✓' : i + 1;
+    });
+  }
+
+  // =====================
+  // LOG ANALYZER
+  // =====================
+  const sampleLogs = {
+    app: `2024-11-12 08:00:01 INFO  Server started on port 8080
+2024-11-12 08:01:14 INFO  Database connection pool initialized [20/20]
+2024-11-12 08:15:33 WARN  Response time exceeded threshold: /api/report [2340ms > 2000ms]
+2024-11-12 08:22:47 ERROR Failed to process transaction TXN_98123: Connection timeout after 30s
+2024-11-12 08:22:47 ERROR java.sql.SQLTimeoutException: Timeout waiting for DB connection
+2024-11-12 08:23:01 WARN  Retry attempt 1/3 for TXN_98123
+2024-11-12 08:23:12 WARN  Retry attempt 2/3 for TXN_98123
+2024-11-12 08:23:24 ERROR Retry attempt 3/3 FAILED. Transaction rolled back.
+2024-11-12 08:24:00 INFO  Health check: OK [uptime: 24m]
+2024-11-12 08:30:55 ERROR NullPointerException in UserService.getProfile() at line 142
+2024-11-12 08:31:02 INFO  Cache cleared for user session 7f8a2c
+2024-11-12 08:45:00 INFO  Batch job DAILY_SYNC started
+2024-11-12 08:45:31 WARN  Slow query detected: SELECT * FROM orders WHERE status='PENDING' [12.4s]
+2024-11-12 09:00:00 INFO  Batch job DAILY_SYNC completed successfully in 14m 29s
+2024-11-12 09:15:22 ERROR OutOfMemoryError: Java heap space
+2024-11-12 09:15:22 ERROR Application restart triggered by watchdog`,
+
+    autosys: `DATE: 2024/11/12  TIME: 06:00:00
+JOBNAME: BATCH_DAILY_RECONCILE  STATUS: RUNNING  NTRY: 1
+DATE: 2024/11/12  TIME: 06:00:05
+INFO: Job BATCH_DAILY_RECONCILE started on host app-server-02
+DATE: 2024/11/12  TIME: 07:58:00
+WARN: Job BATCH_DAILY_RECONCILE runtime exceeded 90% of max_run_alarm (2h)
+DATE: 2024/11/12  TIME: 08:00:01
+ERROR: SENDEVENT: ALARM - BATCH_DAILY_RECONCILE has exceeded max_run_alarm of 02:00:00
+DATE: 2024/11/12  TIME: 08:00:02
+WARN: Dependent jobs BATCH_REPORT, BATCH_NOTIFY set to ON_HOLD
+DATE: 2024/11/12  TIME: 08:12:34
+ERROR: Job BATCH_DAILY_RECONCILE — EXIT CODE: 1 FAILED
+DATE: 2024/11/12  TIME: 08:12:34
+ERROR: STDERR: ORA-01555: snapshot too old: rollback segment too small
+DATE: 2024/11/12  TIME: 08:15:00
+INFO: Manual restart issued by operator ruzzal_mehta
+DATE: 2024/11/12  TIME: 08:15:02
+INFO: Job BATCH_DAILY_RECONCILE restarted on host app-server-02
+DATE: 2024/11/12  TIME: 09:44:11
+INFO: Job BATCH_DAILY_RECONCILE completed successfully EXIT CODE: 0
+DATE: 2024/11/12  TIME: 09:44:12
+INFO: Downstream jobs BATCH_REPORT, BATCH_NOTIFY released`,
+
+    nginx: `192.168.1.101 - - [12/Nov/2024:08:00:01 +0530] "GET /api/health HTTP/1.1" 200 45 "-" "HealthCheck/1.0"
+192.168.1.55  - - [12/Nov/2024:08:00:34 +0530] "POST /api/transactions HTTP/1.1" 200 512 "-" "Mozilla/5.0"
+192.168.1.77  - - [12/Nov/2024:08:01:02 +0530] "GET /api/users/profile HTTP/1.1" 200 1024
+10.0.0.5      - - [12/Nov/2024:08:15:44 +0530] "POST /api/payments HTTP/1.1" 504 0 "-" "PaymentClient/2.1"
+10.0.0.5      - - [12/Nov/2024:08:15:46 +0530] "POST /api/payments HTTP/1.1" 504 0 "-" "PaymentClient/2.1"
+192.168.1.88  - - [12/Nov/2024:08:15:50 +0530] "GET /api/transactions HTTP/1.1" 502 0
+192.168.1.55  - - [12/Nov/2024:08:16:01 +0530] "POST /api/transactions HTTP/1.1" 500 89
+10.0.0.5      - - [12/Nov/2024:08:16:03 +0530] "POST /api/payments HTTP/1.1" 504 0
+192.168.1.101 - - [12/Nov/2024:08:20:00 +0530] "GET /api/health HTTP/1.1" 200 45
+192.168.1.44  - - [12/Nov/2024:08:22:11 +0530] "GET /api/reports HTTP/1.1" 200 8204
+10.0.0.5      - - [12/Nov/2024:08:30:00 +0530] "POST /api/payments HTTP/1.1" 200 512
+192.168.1.55  - - [12/Nov/2024:08:31:44 +0530] "POST /api/transactions HTTP/1.1" 200 512`
+  };
+
+  function loadSampleLog(type) {
+    document.getElementById('log-input').value = sampleLogs[type];
+    analyzeLogs();
+  }
+
+  function analyzeLogs() {
+    const input = document.getElementById('log-input').value;
+    const lines = input.split('\n').filter(l => l.trim());
+    let errors = 0, warns = 0, infos = 0;
+    const output = document.getElementById('log-output');
+    output.innerHTML = '';
+
+    lines.forEach(line => {
+      const div = document.createElement('div');
+      const upper = line.toUpperCase();
+      if (upper.includes('ERROR') || upper.includes(' 500') || upper.includes(' 502') || upper.includes(' 504') || upper.includes('FAIL') || upper.includes('EXCEPTION') || upper.includes('CRITICAL')) {
+        errors++;
+        div.innerHTML = `<span class="log-highlight-error">${escapeHtml(line)}</span>`;
+      } else if (upper.includes('WARN') || upper.includes('SLOW') || upper.includes('EXCEED') || upper.includes('HOLD') || upper.includes('RETRY')) {
+        warns++;
+        div.innerHTML = `<span class="log-highlight-warn">${escapeHtml(line)}</span>`;
+      } else if (upper.includes('SUCCESS') || upper.includes('COMPLETED') || upper.includes('RESOLVED') || upper.includes('" 200')) {
+        div.innerHTML = `<span class="log-highlight-success">${escapeHtml(line)}</span>`;
+        infos++;
+      } else {
+        div.innerHTML = `<span class="log-highlight-info">${escapeHtml(line)}</span>`;
+        infos++;
+      }
+      output.appendChild(div);
+    });
+
+    document.getElementById('cnt-error').textContent = errors;
+    document.getElementById('cnt-warn').textContent = warns;
+    document.getElementById('cnt-info').textContent = infos;
+    document.getElementById('cnt-lines').textContent = lines.length;
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function clearLogs() {
+    document.getElementById('log-input').value = '';
+    document.getElementById('log-output').innerHTML = '<span style="color:#475569;">// Analysis will appear here</span>';
+    ['cnt-error','cnt-warn','cnt-info','cnt-lines'].forEach(id => document.getElementById(id).textContent = '0');
+  }
+
+  // =====================
+  // CICD PIPELINE
+  // =====================
+  const pipelineLogs = {
+    0: { name: 'Code Checkout', lines: ['plog-run','plog-ok','plog-ok','plog-ok'], msgs: ['git fetch origin main','HEAD is now at a4f8c3e feat: improve batch retry logic','Repository cloned in 1.2s','Workspace: /workspace/citi-payments'] },
+    1: { name: 'Build', lines: ['plog-run','plog-ok','plog-ok','plog-ok'], msgs: ['mvn clean package -DskipTests','[INFO] BUILD SUCCESS','JAR created: payments-api-2.4.1-SNAPSHOT.jar','Build time: 45s'] },
+    2: { name: 'Unit Tests', lines: ['plog-run','plog-ok','plog-ok','plog-skip'], msgs: ['mvn test','Tests run: 124, Failures: 0, Errors: 0','Coverage: 87.4% (threshold: 80%)','All tests passed ✓'] },
+    3: { name: 'Security Scan', lines: ['plog-run','plog-ok','plog-skip','plog-ok'], msgs: ['trivy image scan...','CVEs (critical): 0','CVEs (high): 2 — suppressed (non-exploitable)','Security gate: PASS'] },
+    4: { name: 'Docker Build', lines: ['plog-run','plog-ok','plog-ok','plog-ok'], msgs: ['docker build -t citi/payments-api:2.4.1 .','Layer cache hit: 6/8 layers','Image size: 312MB','Pushed to registry: registry.citi.internal/payments-api:2.4.1'] },
+    5: { name: 'Staging Deploy', lines: ['plog-run','plog-ok','plog-ok','plog-ok'], msgs: ['kubectl set image deploy/payments-api payments-api=registry.citi.internal/payments-api:2.4.1 -n staging','Rollout in progress: 0/3 → 1/3 → 2/3 → 3/3','Health checks passing','Staging endpoint verified: 200 OK'] },
+    6: { name: 'Smoke Tests', lines: ['plog-run','plog-ok','plog-ok','plog-ok'], msgs: ['Running smoke test suite (15 tests)...','POST /api/payments → 200 ✓','GET /api/transactions → 200 ✓','All smoke tests passed in 8.3s'] },
+    7: { name: 'Prod Deploy', lines: ['plog-run','plog-ok','plog-ok','plog-ok'], msgs: ['kubectl set image deploy/payments-api payments-api=registry.citi.internal/payments-api:2.4.1 -n production','Rolling update: 0/5 → 2/5 → 4/5 → 5/5 pods updated','Zero-downtime deployment complete','🚀 v2.4.1 is live in production!'] },
+  };
+
+  let pipelineRunning = false;
+
+  async function runPipeline() {
+    if (pipelineRunning) return;
+    pipelineRunning = true;
+    document.getElementById('pipeline-run-btn').style.display = 'none';
+    document.getElementById('pipeline-reset-btn').style.display = 'inline-flex';
+    const branch = document.getElementById('branch-select').value;
+    document.getElementById('pipeline-status').textContent = `Running on ${branch}...`;
+
+    for (let i = 0; i <= 7; i++) {
+      const shouldFail = branch === 'hotfix' && i === 3;
+      setStageStatus(i, 'running');
+      showPipelineDetail(i, shouldFail);
+      await sleep(2000 + Math.random() * 1000);
+
+      if (shouldFail) {
+        setStageStatus(i, 'failed');
+        document.getElementById('pipeline-status').textContent = `❌ Pipeline failed at: ${pipelineLogs[i].name}`;
+        document.getElementById('pipeline-detail-title').textContent = `❌ ${pipelineLogs[i].name} — FAILED`;
+        const logEl = document.getElementById('pipeline-log');
+        logEl.innerHTML += `<span class="plog-err">ERROR: CVE-2024-8821 (CRITICAL) found in base image — blocking deployment</span>`;
+        logEl.innerHTML += `<span class="plog-err">Security gate FAILED — update base image to resolve</span>`;
+        pipelineRunning = false;
+        return;
+      }
+      setStageStatus(i, 'passed');
+    }
+    document.getElementById('pipeline-status').textContent = '✅ Pipeline succeeded — deployed to production';
+    pipelineRunning = false;
+  }
+
+  function setStageStatus(idx, status) {
+    const node = document.getElementById(`stage-${idx}`);
+    const stat = document.getElementById(`status-${idx}`);
+    node.className = 'stage-node ' + status;
+    stat.textContent = status === 'running' ? '⏳ running' : status === 'passed' ? '✓ passed' : status === 'failed' ? '✗ failed' : 'idle';
+  }
+
+  function showPipelineDetail(idx, willFail) {
+    const d = pipelineLogs[idx];
+    document.getElementById('pipeline-detail-title').textContent = `▶ ${d.name}`;
+    const logEl = document.getElementById('pipeline-log');
+    logEl.innerHTML = d.msgs.map((m, i) =>
+      `<span class="${d.lines[i]}">$ ${m}</span>`
+    ).join('');
+  }
+
+  function resetPipeline() {
+    pipelineRunning = false;
+    for (let i = 0; i <= 7; i++) setStageStatus(i, 'idle');
+    document.getElementById('pipeline-run-btn').style.display = 'inline-flex';
+    document.getElementById('pipeline-reset-btn').style.display = 'none';
+    document.getElementById('pipeline-status').textContent = '';
+    document.getElementById('pipeline-detail-title').textContent = 'Pipeline ready — select a branch and click Run';
+    document.getElementById('pipeline-log').innerHTML = '<span class="plog-skip">Awaiting trigger...</span>';
+  }
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+</body>
+</html>
